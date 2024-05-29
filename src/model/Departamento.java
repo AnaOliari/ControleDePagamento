@@ -1,15 +1,12 @@
-// src/model/Departamento.java
 package model;
 
-public class Departamento extends Entidade {
+public class Departamento {
     private String nome;
 
-    public Departamento(int id, String nome) {
-        super(id);
+    public Departamento(String nome) {
         this.nome = nome;
     }
 
-    // Getters e Setters
     public String getNome() {
         return nome;
     }
@@ -19,15 +16,11 @@ public class Departamento extends Entidade {
     }
 
     @Override
-    public void display() {
-        System.out.println(this.toString());
+    public String toString() {
+        return nome;
     }
 
-    @Override
-    public String toString() {
-        return "Departamento{" +
-                "id=" + getId() +
-                ", nome='" + nome + '\'' +
-                '}';
+    public static Departamento fromString(String linha) {
+        return new Departamento(linha);
     }
 }

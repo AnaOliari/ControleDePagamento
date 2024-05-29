@@ -1,0 +1,26 @@
+mai. 26, 2024 11:17:09 PM util.SistemaLog logarErro
+SEVERE: Erro ao carregar dados do arquivo: funcionarios.txt - funcionarios.txt (O sistema não pode encontrar o arquivo especificado)
+mai. 26, 2024 11:17:09 PM util.SistemaLog logarErro
+SEVERE: Erro ao carregar dados do arquivo: departamentos.txt - departamentos.txt (O sistema não pode encontrar o arquivo especificado)
+mai. 26, 2024 11:17:09 PM util.SistemaLog logarErro
+SEVERE: Erro ao carregar dados do arquivo: pagamentos.txt - pagamentos.txt (O sistema não pode encontrar o arquivo especificado)
+mai. 26, 2024 11:36:10 PM util.SistemaLog logarAtividade
+INFO: Dados salvos com sucesso no arquivo: pagamentos.txt
+mai. 26, 2024 11:37:52 PM util.SistemaLog logarErro
+SEVERE: Erro ao carregar dados do arquivo: funcionarios.txt - funcionarios.txt (O sistema não pode encontrar o arquivo especificado)
+mai. 26, 2024 11:37:52 PM util.SistemaLog logarErro
+SEVERE: Erro ao carregar dados do arquivo: departamentos.txt - departamentos.txt (O sistema não pode encontrar o arquivo especificado)
+mai. 26, 2024 11:37:52 PM util.SistemaLog logarAtividade
+INFO: Dados carregados com sucesso do arquivo: pagamentos.txt
+mai. 26, 2024 11:38:46 PM util.SistemaLog logarAtividade
+INFO: Dados salvos com sucesso no arquivo: pagamentos.txt
+mai. 26, 2024 11:39:59 PM util.SistemaLog logarAtividade
+INFO: Dados salvos com sucesso no arquivo: pagamentos.txt
+mai. 26, 2024 11:40:49 PM util.SistemaLog logarErro
+SEVERE: Erro ao carregar dados do arquivo: funcionarios.txt - funcionarios.txt (O sistema não pode encontrar o arquivo especificado)
+mai. 26, 2024 11:40:49 PM util.SistemaLog logarErro
+SEVERE: Erro ao carregar dados do arquivo: departamentos.txt - departamentos.txt (O sistema não pode encontrar o arquivo especificado)
+mai. 26, 2024 11:40:49 PM util.SistemaLog logarAtividade
+INFO: Dados carregados com sucesso do arquivo: pagamentos.txt
+mai. 26, 2024 11:41:13 PM util.SistemaLog logarAtividade
+INFO: Dados salvos com sucesso no arquivo: pagamentos.txt

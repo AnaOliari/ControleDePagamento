@@ -1,21 +1,19 @@
-// src/model/Funcionario.java
 package model;
-
-import java.time.LocalDate;
 
 public class Funcionario extends Pessoa {
     private String cargo;
-    private double salario;
-    private int departamentoId;
+    private float salario;
 
-    public Funcionario(int id, String nome, LocalDate dataNascimento, String cargo, double salario, int departamentoId) {
-        super(id, nome, dataNascimento);
+    public Funcionario(String nome, String cpf, String endereco, String cargo, float salario) {
+        super(nome, cpf, endereco);
         this.cargo = cargo;
         this.salario = salario;
-        this.departamentoId = departamentoId;
     }
 
-    // Getters e Setters
+    public float calcularPagamento() {
+        return salario;
+    }
+
     public String getCargo() {
         return cargo;
     }
@@ -24,36 +22,22 @@ public class Funcionario extends Pessoa {
         this.cargo = cargo;
     }
 
-    public double getSalario() {
+    public float getSalario() {
         return salario;
     }
 
-    public void setSalario(double salario) {
+    public void setSalario(float salario) {
         this.salario = salario;
-    }
-
-    public int getDepartamentoId() {
-        return departamentoId;
-    }
-
-    public void setDepartamentoId(int departamentoId) {
-        this.departamentoId = departamentoId;
-    }
-
-    @Override
-    public void display() {
-        System.out.println(this.toString());
     }
 
     @Override
     public String toString() {
-        return "Funcionario{" +
-                "id=" + getId() +
-                ", nome='" + getNome() + '\'' +
-                ", dataNascimento=" + getDataNascimento() +
-                ", cargo='" + cargo + '\'' +
-                ", salario=" + salario +
-                ", departamentoId=" + departamentoId +
-                '}';
+        return super.toString() + "," + cargo + "," + salario;
+    }
+
+    public static Funcionario fromString(String linha) {
+        String[] partes = linha.split(",");
+        Pessoa pessoa = Pessoa.fromString(String.join(",", partes[0], partes[1], partes[2]));
+        return new Funcionario(pessoa.getNome(), pessoa.getCpf(), pessoa.getEndereco(), partes[3], Float.parseFloat(partes[4]));
     }
 }

@@ -1,19 +1,17 @@
 // src/model/Pessoa.java
 package model;
 
-import java.time.LocalDate;
-
-public abstract class Pessoa extends Entidade {
+public class Pessoa {
     private String nome;
-    private LocalDate dataNascimento;
+    private String cpf;
+    private String endereco;
 
-    public Pessoa(int id, String nome, LocalDate dataNascimento) {
-        super(id);
+    public Pessoa(String nome, String cpf, String endereco) {
         this.nome = nome;
-        this.dataNascimento = dataNascimento;
+        this.cpf = cpf;
+        this.endereco = endereco;
     }
 
-    // Getters e Setters
     public String getNome() {
         return nome;
     }
@@ -22,20 +20,28 @@ public abstract class Pessoa extends Entidade {
         this.nome = nome;
     }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
     @Override
     public String toString() {
-        return "Pessoa{" +
-                "id=" + getId() +
-                ", nome='" + nome + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                '}';
+        return nome + "," + cpf + "," + endereco;
+    }
+
+    public static Pessoa fromString(String linha) {
+        String[] partes = linha.split(",");
+        return new Pessoa(partes[0], partes[1], partes[2]);
     }
 }

@@ -1,67 +1,114 @@
-// src/controller/FuncionarioController.java
 package controller;
 
 import model.Funcionario;
-import model.Departamento;
+import model.FuncionarioCRUD;
+import view.FuncionarioView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+public class FuncionarioController {
+    private FuncionarioCRUD funcionarioCRUD;
+    private FuncionarioView funcionarioView;
 
-public class FuncionarioController implements CRUD<Funcionario> {
-    private List<Funcionario> funcionarios = new ArrayList<>();
-    private DepartamentoController departamentoController;
-
-    public FuncionarioController(DepartamentoController departamentoController) {
-        this.departamentoController = departamentoController;
+    public FuncionarioController(FuncionarioCRUD funcionarioCRUD, FuncionarioView funcionarioView) {
+        this.funcionarioCRUD = funcionarioCRUD;
+        this.funcionarioView = funcionarioView;
     }
 
-    @Override
-    public void cadastrar(Funcionario funcionario) {
-        Departamento departamento = departamentoController.encontrarPorId(funcionario.getDepartamentoId());
-        if (departamento != null) {
-            funcionarios.add(funcionario);
-        } else {
-            System.out.println("Departamento inválido!");
+    public void iniciar() {
+        while (true) {
+            funcionarioView.mostrarMenu();
+            String opcao = funcionarioView.receberEntrada();
+            switch (opcao) {
+                case "1":
+                    adicionarFuncionario();
+                    break;
+                case "2":
+                    atualizarFuncionario();
+                    break;
+                case "3":
+                    removerFuncionario();
+                    break;
+                case "4":
+                    listarFuncionarios();
+                    break;
+                case "0":
+                    return;
+                default:
+                    funcionarioView.exibirMensagem("Opção inválida!");
+            }
         }
     }
 
-    @Override
-    public void alterar(Funcionario funcionario) {
-        Funcionario existente = funcionarios.stream()
-                .filter(f -> f.getId() == funcionario.getId())
-                .findFirst()
-                .orElse(null);
-        if (existente != null) {
-            existente.setNome(funcionario.getNome());
-            existente.setDataNascimento(funcionario.getDataNascimento());
-            existente.setCargo(funcionario.getCargo());
-            existente.setSalario(funcionario.getSalario());
-            existente.setDepartamentoId(funcionario.getDepartamentoId());
-        } else {
-            System.out.println("Funcionário não encontrado!");
+    private void adicionarFuncionario() {
+        funcionarioView.exibirMensagem("Adicionar Funcionário");
+        funcionarioView.exibirMensagem("Nome: ");
+        String nome = funcionarioView.receberEntrada();
+        funcionarioView.exibirMensagem("CPF: ");
+        String cpf = funcionarioView.receberEntrada();
+        funcionarioView.exibirMensagem("Endereço: ");
+        String endereco = funcionarioView.receberEntrada();
+        funcionarioView.exibirMensagem("Cargo: ");
+        String cargo = funcionarioView.receberEntrada();
+        funcionarioView.exibirMensagem("Salário: ");
+        float salario = Float.parseFloat(funcionarioView.receberEntrada());
+
+        Funcionario funcionario = new Funcionario(nome, cpf, endereco, cargo, salario);
+        funcionarioCRUD.adicionar(funcionario);
+        funcionarioView.exibirMensagem("Funcionário adicionado com sucesso!");
+    }
+
+    private void atualizarFuncionario() {
+        funcionarioView.exibirMensagem("Atualizar Funcionário");
+        funcionarioView.exibirMensagem("CPF do funcionário a ser atualizado: ");
+        String cpf = funcionarioView.receberEntrada();
+        Funcionario funcionario = buscarFuncionarioPorCPF(cpf);
+        if (funcionario == null) {
+            funcionarioView.exibirMensagem("Funcionário não encontrado!");
+            return;
+        }
+
+        funcionarioView.exibirMensagem("Novo nome: ");
+        String nome = funcionarioView.receberEntrada();
+        funcionarioView.exibirMensagem("Novo endereço: ");
+        String endereco = funcionarioView.receberEntrada();
+        funcionarioView.exibirMensagem("Novo cargo: ");
+        String cargo = funcionarioView.receberEntrada();
+        funcionarioView.exibirMensagem("Novo salário: ");
+        float salario = Float.parseFloat(funcionarioView.receberEntrada());
+
+        funcionario.setNome(nome);
+        funcionario.setEndereco(endereco);
+        funcionario.setCargo(cargo);
+        funcionario.setSalario(salario);
+        funcionarioCRUD.atualizar(funcionario);
+        funcionarioView.exibirMensagem("Funcionário atualizado com sucesso!");
+    }
+
+    private void removerFuncionario() {
+        funcionarioView.exibirMensagem("Remover Funcionário");
+        funcionarioView.exibirMensagem("CPF do funcionário a ser removido: ");
+        String cpf = funcionarioView.receberEntrada();
+        Funcionario funcionario = buscarFuncionarioPorCPF(cpf);
+        if (funcionario == null) {
+            funcionarioView.exibirMensagem("Funcionário não encontrado!");
+            return;
+        }
+        funcionarioCRUD.remover(funcionarioCRUD.listar().indexOf(funcionario));
+        funcionarioView.exibirMensagem("Funcionário removido com sucesso!");
+    }
+
+    private void listarFuncionarios() {
+        funcionarioView.exibirMensagem("Listar Funcionários");
+        for (Funcionario funcionario : funcionarioCRUD.listar()) {
+            funcionarioView.exibirMensagem(funcionario.toString());
         }
     }
 
-    @Override
-    public void deletar(int id) {
-        funcionarios.removeIf(funcionario -> funcionario.getId() == id);
-    }
-
-    @Override
-    public List<Funcionario> listar() {
-        return funcionarios;
-    }
-
-    public List<Funcionario> listarFuncionariosPorDepartamento(int departamentoId) {
-        return funcionarios.stream()
-                .filter(func -> func.getDepartamentoId() == departamentoId)
-                .collect(Collectors.toList());
-    }
-
-    public List<Funcionario> listar(String cargo) {
-        return funcionarios.stream()
-                .filter(func -> func.getCargo().equals(cargo))
-                .collect(Collectors.toList());
+    private Funcionario buscarFuncionarioPorCPF(String cpf) {
+        for (Funcionario funcionario : funcionarioCRUD.listar()) {
+            if (funcionario.getCpf().equals(cpf)) {
+                return funcionario;
+            }
+        }
+        return null;
     }
 }
