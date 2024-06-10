@@ -1,1 +1,6 @@
-Ana Carolina,13096318913,ajajja,2000.0
+0,Ana Carolina,12345678900,Rua A,1500.0
+1,João Silva,98765432100,Rua B,2000.0
+2,Ana ,12345678996,rua chile,2000.0
+3,Ana ,13096318913,rua chile,2000.0
+4,joao,12345678974,Rua pedro ivo,2000.0
+5,Ana,13096318913,Rua chile 1122,2000.0
