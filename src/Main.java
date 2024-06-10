@@ -1,3 +1,6 @@
+//Controle de pagamento 
+//Ana Carolina OLiari RGM 35984970
+//Matheus João Correa 
 import model.FuncionarioCRUD;
 import model.DepartamentoCRUD;
 import model.PagamentoCRUD;
@@ -26,15 +29,16 @@ public class Main {
         PagamentoView pagamentoView = new PagamentoView();
 
         // Instanciar os Controllers
-        FuncionarioController funcionarioController = new FuncionarioController(funcionarioCRUD, funcionarioView);
+        FuncionarioController funcionarioController = new FuncionarioController(funcionarioCRUD, funcionarioView, departamentoCRUD);
         DepartamentoController departamentoController = new DepartamentoController(departamentoCRUD, departamentoView);
         PagamentoController pagamentoController = new PagamentoController(funcionarioCRUD, pagamentoCRUD, pagamentoView);
 
         // Iniciar a aplicação
         while (true) {
-            System.out.println("Sistema de Controle de Pagamentos");
-            System.out.println("1. Gerenciar Funcionários");
-            System.out.println("2. Gerenciar Departamentos");
+            System.out.println(" ");
+            System.out.println("--- Sistema de Controle de Pagamentos ---");
+            System.out.println("1. Gerenciar Departamentos");
+            System.out.println("2. Gerenciar Funcionários");
             System.out.println("3. Gerenciar Pagamentos");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
@@ -43,10 +47,10 @@ public class Main {
 
             switch (opcao) {
                 case "1":
-                    funcionarioController.iniciar();
+                    departamentoController.iniciar();
                     break;
                 case "2":
-                    departamentoController.iniciar();
+                    funcionarioController.iniciar();
                     break;
                 case "3":
                     pagamentoController.iniciar();

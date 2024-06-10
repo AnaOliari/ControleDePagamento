@@ -20,13 +20,23 @@ public class PagamentoCRUD {
     }
 
     public void remover(int id) {
-        if (id >= 0 && id < pagamentos.size()) {
-            pagamentos.remove(id);
+        Pagamento pagamento = buscarPorId(id);
+        if (pagamento != null) {
+            pagamentos.remove(pagamento);
         }
     }
 
     public List<Pagamento> listar() {
         return new ArrayList<>(pagamentos);
+    }
+
+    public Pagamento buscarPorId(int id) {
+        for (Pagamento pagamento : pagamentos) {
+            if (pagamento.getId() == id) {
+                return pagamento;
+            }
+        }
+        return null;
     }
 
     public void salvar(String filename) {
@@ -38,6 +48,10 @@ public class PagamentoCRUD {
         for (String linha : dados) {
             Pagamento pagamento = Pagamento.fromString(linha);
             pagamentos.add(pagamento);
+        }
+        // Atualizar o contador para o próximo ID
+        if (!pagamentos.isEmpty()) {
+            Pagamento.setContador(pagamentos.get(pagamentos.size() - 1).getId() + 1);
         }
     }
 }

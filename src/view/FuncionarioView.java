@@ -10,6 +10,7 @@ public class FuncionarioView {
     }
 
     public void mostrarMenu() {
+        System.out.println(" ");
         System.out.println("1. Adicionar Funcionário");
         System.out.println("2. Atualizar Funcionário");
         System.out.println("3. Remover Funcionário");

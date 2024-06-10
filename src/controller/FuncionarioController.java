@@ -1,5 +1,8 @@
+// src/controller/FuncionarioController.java
 package controller;
 
+import model.Departamento;
+import model.DepartamentoCRUD;
 import model.Funcionario;
 import model.FuncionarioCRUD;
 import view.FuncionarioView;
@@ -7,10 +10,12 @@ import view.FuncionarioView;
 public class FuncionarioController {
     private FuncionarioCRUD funcionarioCRUD;
     private FuncionarioView funcionarioView;
+    private DepartamentoCRUD departamentoCRUD;
 
-    public FuncionarioController(FuncionarioCRUD funcionarioCRUD, FuncionarioView funcionarioView) {
+    public FuncionarioController(FuncionarioCRUD funcionarioCRUD, FuncionarioView funcionarioView, DepartamentoCRUD departamentoCRUD) {
         this.funcionarioCRUD = funcionarioCRUD;
         this.funcionarioView = funcionarioView;
+        this.departamentoCRUD = departamentoCRUD;
     }
 
     public void iniciar() {
@@ -50,8 +55,18 @@ public class FuncionarioController {
         String cargo = funcionarioView.receberEntrada();
         funcionarioView.exibirMensagem("Salário: ");
         float salario = Float.parseFloat(funcionarioView.receberEntrada());
+        funcionarioView.exibirMensagem("Departamento: ");
+        String departamentoNome = funcionarioView.receberEntrada();
+
+        Departamento departamento = departamentoCRUD.buscarPorNome(departamentoNome);
+        if (departamento == null) {
+            funcionarioView.exibirMensagem("Departamento não encontrado!");
+            return;
+        }
 
         Funcionario funcionario = new Funcionario(nome, cpf, endereco, cargo, salario);
+        funcionario.setDepartamento(departamento);
+        departamento.adicionarFuncionario(funcionario);
         funcionarioCRUD.adicionar(funcionario);
         funcionarioView.exibirMensagem("Funcionário adicionado com sucesso!");
     }
@@ -74,11 +89,27 @@ public class FuncionarioController {
         String cargo = funcionarioView.receberEntrada();
         funcionarioView.exibirMensagem("Novo salário: ");
         float salario = Float.parseFloat(funcionarioView.receberEntrada());
+        funcionarioView.exibirMensagem("Novo departamento: ");
+        String departamentoNome = funcionarioView.receberEntrada();
+
+        Departamento novoDepartamento = departamentoCRUD.buscarPorNome(departamentoNome);
+        if (novoDepartamento == null) {
+            funcionarioView.exibirMensagem("Departamento não encontrado!");
+            return;
+        }
+
+        Departamento departamentoAtual = funcionario.getDepartamento();
+        if (departamentoAtual != null) {
+            departamentoAtual.getFuncionarios().remove(funcionario);
+        }
 
         funcionario.setNome(nome);
         funcionario.setEndereco(endereco);
         funcionario.setCargo(cargo);
         funcionario.setSalario(salario);
+        funcionario.setDepartamento(novoDepartamento);
+        novoDepartamento.adicionarFuncionario(funcionario);
+
         funcionarioCRUD.atualizar(funcionario);
         funcionarioView.exibirMensagem("Funcionário atualizado com sucesso!");
     }
@@ -92,6 +123,12 @@ public class FuncionarioController {
             funcionarioView.exibirMensagem("Funcionário não encontrado!");
             return;
         }
+
+        Departamento departamento = funcionario.getDepartamento();
+        if (departamento != null) {
+            departamento.getFuncionarios().remove(funcionario);
+        }
+
         funcionarioCRUD.remover(funcionarioCRUD.listar().indexOf(funcionario));
         funcionarioView.exibirMensagem("Funcionário removido com sucesso!");
     }

@@ -27,6 +27,8 @@ public class Serializacao {
                 lista.add(linha);
             }
             SistemaLog.logarAtividade("Dados carregados com sucesso do arquivo: " + filename);
+        } catch (FileNotFoundException e) {
+            SistemaLog.logarErro("Erro ao carregar dados do arquivo: " + filename + " - Arquivo não encontrado.");
         } catch (IOException e) {
             SistemaLog.logarErro("Erro ao carregar dados do arquivo: " + filename + " - " + e.getMessage());
             e.printStackTrace();

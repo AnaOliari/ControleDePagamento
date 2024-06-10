@@ -40,4 +40,13 @@ public class DepartamentoCRUD {
             departamentos.add(departamento);
         }
     }
+
+    public Departamento buscarPorNome(String nome) {
+        for (Departamento departamento : departamentos) {
+            if (departamento.getNome().equals(nome)) {
+                return departamento;
+            }
+        }
+        return null;
+    }
 }

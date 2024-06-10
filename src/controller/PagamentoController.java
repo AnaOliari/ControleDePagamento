@@ -52,24 +52,27 @@ public class PagamentoController {
             return;
         }
 
+        pagamentoView.exibirMensagem("Nome do Funcionário: " + funcionario.getNome());
+        pagamentoView.exibirMensagem("Salário do Funcionário: " + funcionario.getSalario());
+
         pagamentoView.exibirMensagem("Valor do pagamento: ");
         float valor = Float.parseFloat(pagamentoView.receberEntrada());
         Pagamento pagamento = new Pagamento(funcionario, valor);
         pagamentoCRUD.adicionar(pagamento);
         pagamentoCRUD.salvar("pagamentos.txt");
-        pagamentoView.exibirMensagem("Pagamento adicionado com sucesso!");
+        pagamentoView.exibirMensagem("Pagamento adicionado com sucesso! ID do pagamento: " );
+        pagamento.gerarComprovante();
     }
 
     private void atualizarPagamento() {
         pagamentoView.exibirMensagem("Atualizar Pagamento");
         pagamentoView.exibirMensagem("ID do pagamento a ser atualizado: ");
         int id = Integer.parseInt(pagamentoView.receberEntrada());
-        if (id < 0 || id >= pagamentoCRUD.listar().size()) {
+        Pagamento pagamento = pagamentoCRUD.buscarPorId(id);
+        if (pagamento == null) {
             pagamentoView.exibirMensagem("Pagamento não encontrado!");
             return;
         }
-
-        Pagamento pagamento = pagamentoCRUD.listar().get(id);
 
         pagamentoView.exibirMensagem("Novo valor do pagamento: ");
         float novoValor = Float.parseFloat(pagamentoView.receberEntrada());
@@ -83,7 +86,8 @@ public class PagamentoController {
         pagamentoView.exibirMensagem("Remover Pagamento");
         pagamentoView.exibirMensagem("ID do pagamento a ser removido: ");
         int id = Integer.parseInt(pagamentoView.receberEntrada());
-        if (id < 0 || id >= pagamentoCRUD.listar().size()) {
+        Pagamento pagamento = pagamentoCRUD.buscarPorId(id);
+        if (pagamento == null) {
             pagamentoView.exibirMensagem("Pagamento não encontrado!");
             return;
         }
@@ -95,10 +99,8 @@ public class PagamentoController {
 
     private void listarPagamentos() {
         pagamentoView.exibirMensagem("Listar Pagamentos");
-        int id = 0;
         for (Pagamento pagamento : pagamentoCRUD.listar()) {
-            pagamentoView.exibirMensagem("ID: " + id + " - " + pagamento.toString());
-            id++;
+            pagamentoView.exibirMensagem(pagamento.toString());
         }
     }
 

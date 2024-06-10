@@ -52,7 +52,7 @@ public class DepartamentoController {
         departamentoView.exibirMensagem("Atualizar Departamento");
         departamentoView.exibirMensagem("Nome do departamento a ser atualizado: ");
         String nome = departamentoView.receberEntrada();
-        Departamento departamento = buscarDepartamentoPorNome(nome);
+        Departamento departamento = departamentoCRUD.buscarPorNome(nome);
         if (departamento == null) {
             departamentoView.exibirMensagem("Departamento não encontrado!");
             return;
@@ -69,7 +69,7 @@ public class DepartamentoController {
         departamentoView.exibirMensagem("Remover Departamento");
         departamentoView.exibirMensagem("Nome do departamento a ser removido: ");
         String nome = departamentoView.receberEntrada();
-        Departamento departamento = buscarDepartamentoPorNome(nome);
+        Departamento departamento = departamentoCRUD.buscarPorNome(nome);
         if (departamento == null) {
             departamentoView.exibirMensagem("Departamento não encontrado!");
             return;
@@ -81,16 +81,7 @@ public class DepartamentoController {
     private void listarDepartamentos() {
         departamentoView.exibirMensagem("Listar Departamentos");
         for (Departamento departamento : departamentoCRUD.listar()) {
-            departamentoView.exibirMensagem(departamento.toString());
+            departamentoView.exibirMensagem(departamento.toString() + " - Quantidade de Funcionários: " + departamento.getQuantidadeFuncionarios());
         }
-    }
-
-    private Departamento buscarDepartamentoPorNome(String nome) {
-        for (Departamento departamento : departamentoCRUD.listar()) {
-            if (departamento.getNome().equals(nome)) {
-                return departamento;
-            }
-        }
-        return null;
     }
 }

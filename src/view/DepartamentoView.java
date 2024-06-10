@@ -10,6 +10,7 @@ public class DepartamentoView {
     }
 
     public void mostrarMenu() {
+        System.out.println(" ");
         System.out.println("1. Adicionar Departamento");
         System.out.println("2. Atualizar Departamento");
         System.out.println("3. Remover Departamento");

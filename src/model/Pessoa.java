@@ -37,7 +37,7 @@ public class Pessoa {
     }
     @Override
     public String toString() {
-        return nome + "," + cpf + "," + endereco;
+        return "Funcionario: " + nome + ", CPF: " + cpf + ", endereço: " + endereco;
     }
 
     public static Pessoa fromString(String linha) {
