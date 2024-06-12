@@ -1,0 +1,2 @@
+ID: 0, Funcionario: Ana, CPF: 13096318913, Endereço: rua chile, Pagamento: 2000.0, Data e hora: 11/06/2024 20:54:27
+ID: 1, Funcionario: ana, CPF: 13096318913, Endereço: Rua chile, Pagamento: 2000.0, Data e hora: 11/06/2024 20:54:27
